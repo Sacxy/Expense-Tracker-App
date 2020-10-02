@@ -1,18 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
 import './widgets/chart.dart';
 import './models/transaction.dart';
+import 'dart:async';
 
 void main() {
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitDown,
-  // ]);
   runApp(MyApp());
 }
 
@@ -42,7 +36,7 @@ class MyApp extends StatelessWidget {
               ),
         ),
       ),
-      home: MyHomePage(),
+      home: SplashScreen(),
     );
   }
 }
@@ -55,20 +49,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  final List<Transaction> _userTransaction = [
-    // Transaction(
-    //   id: "t1",
-    //   title: "New Shoes",
-    //   amount: 99.99,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: "t2",
-    //   title: "Food",
-    //   amount: 12.99,
-    //   date: DateTime.now(),
-    // ),
-  ];
+  final List<Transaction> _userTransaction = [];
 
   bool _showChart = true;
 
@@ -188,17 +169,10 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    // print("WTFFF");
     final mediaQuery = MediaQuery.of(context);
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text("Expense Tracker"),
-      actions: <Widget>[
-        IconButton(
-            icon: Icon(Icons.add_shopping_cart),
-            onPressed: () => _startAddNewTransaction(context),
-            color: Colors.black)
-      ],
     );
 
     final txListWidget = Container(
@@ -212,7 +186,6 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
-          // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             if (isLandscape)
@@ -238,6 +211,83 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
               hoverColor: Colors.deepOrange,
               child: Icon(Icons.add),
             ),
+    );
+  }
+}
+
+class SplashScreen extends StatefulWidget {
+//  static const String id = 'splash_screen';
+
+  @override
+  _SplashScreenState createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    Timer(Duration(seconds: 3), () {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => MyHomePage()));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Container(
+            color: Colors.purple,
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Expanded(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    CircleAvatar(
+                      backgroundColor: Colors.white,
+                      radius: 50.0,
+                      child: Icon(
+                        Icons.account_balance_wallet,
+                        color: Colors.green,
+                        size: 50.0,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Center(
+                        child: Text(
+                          'Expense Tracker',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 24.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                ),
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(14.0),
+                  child: Text(
+                    "WASTE NO MONEY!",
+                    style: TextStyle(color: Colors.white),
+                  )),
+            ],
+          )
+        ],
+      ),
     );
   }
 }
