@@ -1,6 +1,8 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import '../models/transaction.dart';
 
 class TransactionItem extends StatefulWidget {
@@ -43,7 +45,7 @@ class _TransactionItemState extends State<TransactionItem> {
           radius: 30,
           child: Padding(
             padding: const EdgeInsets.all(6.0),
-            child: FittedBox(child: Text("\₹${widget.transaction.amount}")),
+            child: FittedBox(child: Text("\$${widget.transaction.amount}")),
           ),
         ),
         title: Text(

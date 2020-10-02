@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
 import './chart_bar.dart';
 import '../models/transaction.dart';
 
@@ -29,7 +30,7 @@ class Chart extends StatelessWidget {
         // print(DateFormat.E().format(weekDay));
         // print(totalSum);
         return {
-          'day': DateFormat.E().format(weekDay).substring(0, 2),
+          'day': DateFormat.E().format(weekDay).substring(0, 1),
           'amount': totalSum,
         };
       },

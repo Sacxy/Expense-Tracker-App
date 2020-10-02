@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../models/transaction.dart';
 import './transaction_item.dart';
 
@@ -38,6 +40,7 @@ class TransactionList extends StatelessWidget {
                   ),
                 )
                 .toList(),
+            // children: transaction.map((tx) {}).toList(),
           );
   }
 }
